@@ -2,12 +2,12 @@ using WebApiPlayground.Libraries.Domain.HealthCheck;
 
 namespace WebApiPlayground.Features.Health;
 
-public record HealthCheckRequest(string EchoMessageData);
+public record PingRequest(string EchoMessageData);
 
-public record HealthCheckResponse(string ResponseMessageData)
+public record PingResponse(string ResponseMessageData)
 {
-    public HealthCheckResponse FromDomain(HealthCheckProbe probeData)
+    public PingResponse FromDomain(HealthCheckProbe probeData)
     {
-        return new HealthCheckResponse(probeData.Message);
+        return new PingResponse(probeData.Message);
     }
 }
