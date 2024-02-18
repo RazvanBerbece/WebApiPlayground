@@ -2,7 +2,7 @@ using WebApiPlayground.Libraries.Domain.Events;
 
 namespace WebApiPlayground.Features.Health;
 
-public class PingEndpoint : Endpoint<HealthCheckRequest, HealthCheckResponse>
+public class PingEndpoint(ILogger<PingEndpoint> logger) : Endpoint<HealthCheckRequest, HealthCheckResponse>
 {
     public override void Configure()
     {
@@ -12,7 +12,9 @@ public class PingEndpoint : Endpoint<HealthCheckRequest, HealthCheckResponse>
 
     public override async Task HandleAsync(HealthCheckRequest req, CancellationToken ct)
     {
-        await PublishAsync(new PingRequestReceivedEvent()
+        logger.LogInformation("Handle POST PingEndpoint");
+        
+        await PublishAsync(new PingRequestReceivedEvent
         {
             Data = req.EchoMessageData
         }, cancellation: ct);
