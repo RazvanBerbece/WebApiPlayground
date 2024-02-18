@@ -12,7 +12,7 @@ public class PingEndpoint(ILogger<PingEndpoint> logger) : Endpoint<PingRequest, 
 
     public override async Task HandleAsync(PingRequest req, CancellationToken ct)
     {
-        logger.LogInformation("Handle POST PingEndpoint");
+        logger.LogInformation("Handling POST PingEndpoint");
         
         await PublishAsync(new PingRequestReceivedEvent
         {

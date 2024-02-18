@@ -1,0 +1,48 @@
+name: deploy
+
+on:
+  push:
+    paths-ignore:
+      - '.github/**'
+      - 'docs/**'
+      - 'README.md'
+      - '.gitignore'
+      - '.gitmodules'
+    branches: [ 'main' ]
+
+  workflow_dispatch:
+
+jobs:
+
+  continuous-integration:
+    uses: ./.github/workflows/test.yml
+    secrets: inherit
+
+  deploy:
+    needs: [continuous-integration]
+    runs-on: ubuntu-latest
+    if: needs.continuous-integration.result == 'success'
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate next release number
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          default_bump: major
+          dry_run: true
+      
+      - name: Create a new GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          tag: ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.tag_version.outputs.changelog }}
+      
