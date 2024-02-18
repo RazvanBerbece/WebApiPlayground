@@ -16,7 +16,8 @@ public class PingEndpoint(ILogger<PingEndpoint> logger) : Endpoint<PingRequest, 
         
         await PublishAsync(new PingRequestReceivedEvent
         {
-            Data = req.EchoMessageData
+            Data = req.EchoMessageData,
+            CreationTime = DateTime.Now
         }, cancellation: ct);
         
         await SendOkAsync(new PingResponse(req.EchoMessageData), cancellation: ct);
