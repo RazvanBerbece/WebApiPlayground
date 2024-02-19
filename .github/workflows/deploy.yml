@@ -48,6 +48,14 @@ jobs:
           username: ${{ secrets.AZURE_CLIENT_ID }}
           password: ${{ secrets.AZURE_CLIENT_SECRET }}
       
+      - name: 'Docker build' new image
+        run: |
+          docker build --tag "webapi:${{ steps.tag_version.outputs.new_tag }}" -f src/WebApiPlayground/Dockerfile .
+      
+      - name: 'Docker push' to ACR
+        run: |
+          docker push "webapi:${{ steps.tag_version.outputs.new_tag }}"
+      
       - name: Create a new GitHub release
         uses: ncipollo/release-action@v1
         with:
