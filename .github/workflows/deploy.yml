@@ -50,7 +50,7 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CLIENT_SP_CREDENTIALS }}
           
-      - name: Login to ACR
+      - name: Docker login to ACR
         uses: docker/login-action@v3.0.0
         with:
           registry: ${{ env.DOCKER_ARTIFACT_REPOSITORY }}
@@ -64,7 +64,7 @@ jobs:
       - name: Push new image to ACR
         run: |
           docker push "${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:${{ steps.tag_version.outputs.new_tag }}"
-
+          
       - name: Deploy new image to Container App
         uses: azure/container-apps-deploy-action@v1
         with:
@@ -72,6 +72,9 @@ jobs:
           containerAppName: capp-webapi-playground
           resourceGroup: rg-webApiPlayground
           imageToDeploy: ${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:${{ steps.tag_version.outputs.new_tag }}
+          environmentVariables: \
+            ENV=Staging \
+            KEY=secretref:ThisIsASecretValue
 
       - name: Create a new GitHub release
         uses: ncipollo/release-action@v1

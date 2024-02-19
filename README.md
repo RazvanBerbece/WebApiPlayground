@@ -7,4 +7,4 @@ Core:
 - WebApiPlayground - The public-facing API which handles requests from clients.
 
 # Cloud Infrastructure
-This service is hosted on Azure infrastructure. The infrastructure is declared as code using Terraform and can be seen in this repository [WebApiPlayground](https://github.com/RazvanBerbece/WebApiPlaygroundInfra).
+This service is hosted on Azure infrastructure. The infrastructure is declared as code using Terraform and can be seen here: [WebApiPlayground Cloud Infrastructure Repository](https://github.com/RazvanBerbece/WebApiPlaygroundInfra).
