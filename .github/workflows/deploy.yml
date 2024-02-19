@@ -54,7 +54,7 @@ jobs:
 
       - name: Push new image to ACR
         run: |
-          docker push "webapi:${{ steps.tag_version.outputs.new_tag }}"
+          docker push "${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:${{ steps.tag_version.outputs.new_tag }}"
 
       - name: Create a new GitHub release
         uses: ncipollo/release-action@v1
