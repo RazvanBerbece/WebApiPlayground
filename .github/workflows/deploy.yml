@@ -66,12 +66,13 @@ jobs:
           docker push "${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:${{ steps.tag_version.outputs.new_tag }}"
           
       - name: Deploy new image to Container App
-        uses: azure/container-apps-deploy-action@v1
+        uses: azure/CLI@v1
         with:
-          appSourcePath: ${{ github.workspace }}
-          acrName: ${{ env.DOCKER_ARTIFACT_REPOSITORY_NAME }}
-          containerAppName: capp-webapi-playground
+          appSourcePath: ${{ github.workspace }}/src/WebApiPlayground
           resourceGroup: rg-webApiPlayground
+          containerAppEnvironment: cae-api
+          containerAppName: capp-webapi-playground          
+          acrName: ${{ env.DOCKER_ARTIFACT_REPOSITORY_NAME }}
           imageToDeploy: ${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:${{ steps.tag_version.outputs.new_tag }}
           environmentVariables: "ENV=Staging"
 
