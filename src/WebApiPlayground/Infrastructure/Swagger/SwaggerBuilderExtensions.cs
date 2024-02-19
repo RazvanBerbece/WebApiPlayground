@@ -1,6 +1,6 @@
 namespace WebApiPlayground.Infrastructure.Swagger;
 
-public static class SwaggerExtensions
+public static class SwaggerBuilderExtensions
 {
     public static IServiceCollection AddSwagger(this IServiceCollection services)
     {

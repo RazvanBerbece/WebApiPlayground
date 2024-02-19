@@ -1,8 +1,8 @@
 namespace WebApiPlayground.Infrastructure.ApiEndpoints;
 
-public static class ServiceExtensions
+public static class ApiEndpointsBuilderExtensions
 {
-    public static IServiceCollection AddApiEndpoints(this IServiceCollection services)
+    public static IServiceCollection  AddApiEndpoints(this IServiceCollection services)
     {
         return services.AddFastEndpoints();
     }
