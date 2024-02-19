@@ -17,6 +17,7 @@ on:
 
 env:
   DOCKER_ARTIFACT_REPOSITORY: ${{ secrets.ACR_LOGIN_SERVER_ADDRESS }}
+  DOCKER_ARTIFACT_REPOSITORY_NAME: ${{ secrets.ACR_NAME }}
 
 jobs:
 
@@ -65,16 +66,12 @@ jobs:
           docker push "${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:${{ steps.tag_version.outputs.new_tag }}"
 
       - name: Deploy new image to Container App
-        run: |
-          az containerapp up \
-            --name capp-webapi-playground \
-            --resource-group rg-webApiPlayground \
-            --location westeurope \
-            --environment 'cae-api' \
-            --image acrwebapiplayground.azurecr.io/webapi:${{ steps.tag_version.outputs.new_tag }} \
-            --target-port 80 \
-            --ingress external \
-            --query properties.configuration.ingress.fqdn
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          acrName: ${{ env.DOCKER_ARTIFACT_REPOSITORY_NAME }}
+          containerAppName: capp-webapi-playground
+          resourceGroup: rg-webApiPlayground
+          imageToDeploy: ${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:${{ steps.tag_version.outputs.new_tag }}
 
       - name: Create a new GitHub release
         uses: ncipollo/release-action@v1
