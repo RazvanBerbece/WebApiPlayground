@@ -71,7 +71,7 @@ jobs:
         with:
           inlineScript: |
             az containerapp registry set -n capp-webapi-playground -g rg-webApiPlayground --identity system --server ${{ env.DOCKER_ARTIFACT_REPOSITORY }} 
-            az containerapp update -n capp-webapi-playground -g rg-webApiPlayground --image acrwebapiplayground.azurecr.io/webapi:latest --ingress 'external' --min-replicas 1 --max-replicas 1
+            az containerapp update -n capp-webapi-playground -g rg-webApiPlayground --image acrwebapiplayground.azurecr.io/webapi:latest --ingress external --min-replicas 1 --max-replicas 1
 
       - name: Create a new GitHub release
         uses: ncipollo/release-action@v1
