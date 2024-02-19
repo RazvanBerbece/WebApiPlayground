@@ -43,14 +43,14 @@ jobs:
           github_token: ${{ secrets.GH_TOKEN }}
           default_bump: major
           dry_run: true
-
-      - name: Login to Azure
-        uses: Azure/login@v1.6.1
+          
+      - uses: Azure/login@v1.6.1
+        name: Login to Azure
         with:
           creds: ${{ secrets.AZURE_CLIENT_SP_CREDENTIALS }}
-
-      - name: Login to ACR
-        uses: docker/login@v1
+          
+      - uses: docker/login@v1
+        name: Login to ACR
         with:
           registry: ${{ env.DOCKER_ARTIFACT_REPOSITORY }}
           username: ${{ secrets.AZURE_CLIENT_ID }}
