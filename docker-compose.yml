@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   webapi:
-    image: acrwebapiplayground.azurecr.io/webapi:v4.0.0
+    image: acrwebapiplayground.azurecr.io/webapi:v5.0.0
     container_name: WebApiPlayground
     ports:
       - "8080:8080"
