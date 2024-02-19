@@ -57,13 +57,13 @@ jobs:
           username: ${{ secrets.AZURE_CLIENT_ID }}
           password: ${{ secrets.AZURE_CLIENT_SECRET }}
           
-      - name: Build new Docker image
-        run: |
-          docker build -t "${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:${{ steps.tag_version.outputs.new_tag }}" -f src/WebApiPlayground/Dockerfile .
+      # - name: Build new Docker image
+      #   run: |
+      #     docker build -t "${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:${{ steps.tag_version.outputs.new_tag }}" -f src/WebApiPlayground/Dockerfile .
 
-      - name: Push new image to ACR
-        run: |
-          docker push "${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:${{ steps.tag_version.outputs.new_tag }}"
+      # - name: Push new image to ACR
+      #   run: |
+      #     docker push "${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:${{ steps.tag_version.outputs.new_tag }}"
           
       - name: Deploy new image to Container App
         uses: azure/container-apps-deploy-action@v1
@@ -73,7 +73,7 @@ jobs:
           containerAppEnvironment: cae-api
           containerAppName: capp-webapi-playground          
           acrName: ${{ env.DOCKER_ARTIFACT_REPOSITORY_NAME }}
-          imageToDeploy: ${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:latest
+          imageToDeploy: acrwebapiplayground.azurecr.io/webapi:latest
           environmentVariables: "ENV=Staging"
 
       - name: Create a new GitHub release
