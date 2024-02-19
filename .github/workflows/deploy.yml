@@ -50,7 +50,7 @@ jobs:
 
       - name: Build new Docker image
         run: |
-          docker build --tag "webapi:${{ steps.tag_version.outputs.new_tag }}" -f src/WebApiPlayground/Dockerfile .
+          docker build -t "${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:${{ steps.tag_version.outputs.new_tag }}" -f src/WebApiPlayground/Dockerfile .
 
       - name: Push new image to ACR
         run: |
