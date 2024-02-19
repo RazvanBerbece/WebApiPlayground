@@ -70,7 +70,7 @@ jobs:
         uses: Azure/cli@v1.0.9
         with:
           inlineScript: |
-            az containerapp update -n capp-webapi-playground -g rg-webApiPlayground --image acrwebapiplayground.azurecr.io/my-app:latest
+            az containerapp update -n capp-webapi-playground -g rg-webApiPlayground --image acrwebapiplayground.azurecr.io/webapi:latest
 
       - name: Create a new GitHub release
         uses: ncipollo/release-action@v1
