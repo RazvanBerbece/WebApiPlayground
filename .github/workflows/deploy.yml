@@ -73,9 +73,7 @@ jobs:
           containerAppName: capp-webapi-playground
           resourceGroup: rg-webApiPlayground
           imageToDeploy: ${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:${{ steps.tag_version.outputs.new_tag }}
-          environmentVariables: \
-            ENV=Staging \
-            KEY=secretref:ThisIsASecretValue
+          environmentVariables: "ENV=Staging KEY=secretref:ThisIsASecretValue"
 
       - name: Create a new GitHub release
         uses: ncipollo/release-action@v1
