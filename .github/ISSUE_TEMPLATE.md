@@ -1,5 +1,5 @@
 # Issue Type
-- [ ] Feature
+- [x] Feature
 
 - [ ] Bug
 
