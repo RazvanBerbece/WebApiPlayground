@@ -68,6 +68,7 @@ jobs:
       - name: Deploy new image to Container App
         uses: azure/container-apps-deploy-action@v1
         with:
+          appSourcePath: ${{ github.workspace }}
           acrName: ${{ env.DOCKER_ARTIFACT_REPOSITORY_NAME }}
           containerAppName: capp-webapi-playground
           resourceGroup: rg-webApiPlayground
