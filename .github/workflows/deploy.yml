@@ -73,7 +73,7 @@ jobs:
           containerAppEnvironment: cae-api
           containerAppName: capp-webapi-playground          
           acrName: ${{ env.DOCKER_ARTIFACT_REPOSITORY_NAME }}
-          imageToDeploy: ${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:${{ steps.tag_version.outputs.new_tag }}
+          imageToDeploy: ${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:latest
           environmentVariables: "ENV=Staging"
 
       - name: Create a new GitHub release
