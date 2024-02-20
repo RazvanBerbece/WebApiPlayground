@@ -9,7 +9,7 @@ public class PingRequestReceivedEventHandler(ILogger<PingRequestReceivedEventHan
 
     public Task HandleAsync(PingRequestReceivedEvent eventModel, CancellationToken ct)
     {
-        _logger.LogInformation($"ping request received event received:[{eventModel.Data}] at [{eventModel.CreationTime}]");
+        _logger.LogInformation($"ping request received event received: [{eventModel.Data}] at [{eventModel.CreationTime}]");
         return Task.CompletedTask;
     }
 }
