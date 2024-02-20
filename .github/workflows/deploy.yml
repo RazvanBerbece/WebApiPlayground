@@ -17,7 +17,6 @@ on:
 
 env:
   DOCKER_ARTIFACT_REPOSITORY: ${{ secrets.ACR_LOGIN_SERVER_ADDRESS }}
-  DOCKER_ARTIFACT_REPOSITORY_NAME: ${{ secrets.ACR_NAME }}
 
 jobs:
 
@@ -66,23 +65,13 @@ jobs:
           docker push "${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:latest"
           docker push "${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:${{ steps.tag_version.outputs.new_tag }}"
           
-      # - name: Deploy new image to Container App
-      #   uses: Azure/cli@v1.0.9
-      #   with:
-      #     inlineScript: |
-      #       az containerapp registry set -n capp-webapi-playground -g rg-webApiPlayground --identity system --server ${{ env.DOCKER_ARTIFACT_REPOSITORY }} 
-      #       az containerapp update -n capp-webapi-playground -g rg-webApiPlayground --image acrwebapiplayground.azurecr.io/webapi:latest --min-replicas 1 --max-replicas 2
-
-      - name: Build and Deploy Container App to Azure
-        uses: azure/container-apps-deploy-action@v1
+      - name: Deploy new image to Container App
+        uses: Azure/cli@v1.0.9
         with:
-          imageToDeploy: ${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:${{ steps.tag_version.outputs.new_tag }}
-          registryUsername: ${{ secrets.AZURE_CLIENT_ID }}
-          registryPassword: ${{ secrets.AZURE_CLIENT_SECRET }}
-          containerAppEnvironment: cae-api
-          containerAppName: capp-webapi-playground
-          resourceGroup: rg-webApiPlayground
-          ingress: external
+          inlineScript: >
+            az config set extension.use_dynamic_install=yes_without_prompt
+            az containerapp registry set -n capp-webapi-playground -g rg-webApiPlayground --server ${{ env.DOCKER_ARTIFACT_REPOSITORY }} --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
+            az containerapp update -n capp-webapi-playground -g rg-webApiPlayground --image ${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:latest --min-replicas 1 --max-replicas 2
 
       - name: Create a new GitHub release
         uses: ncipollo/release-action@v1
