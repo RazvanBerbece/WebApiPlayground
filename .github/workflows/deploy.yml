@@ -56,9 +56,13 @@ jobs:
           username: ${{ secrets.AZURE_CLIENT_ID }}
           password: ${{ secrets.AZURE_CLIENT_SECRET }}
 
-      - name: Extract appsettings.json
-        run: |
-          echo ${{ secrets.APPSETTINGS_JSON }} > src/WebApiPlayground/appsettings.json
+      - name: Substitute appsettings.json values
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: 'src/WebApiPlayground/appsettings.json'
+        env:
+          DefaultConfigurationVariable: "ThisIsAPlaceholderValue"
+          DefaultSecretKey: ${{ secrets.DUMMY_SECRET_KEY }}
           
       - name: Build new Docker image
         run: |
