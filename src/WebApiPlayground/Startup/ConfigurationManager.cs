@@ -9,8 +9,8 @@ public static class ConfigurationManager
     /// <param name="configuration">the configuration used for the service buildup (appsettings.*.json)</param>
     public static void CheckConfiguration(this WebApplication app, IConfiguration configuration)
     {
-        var defaultEnvVariable = configuration.GetValue<string>("DefaultEnvironmentVariable");
+        var defaultConfigVariable = configuration.GetValue<string>("DefaultConfigurationVariable");
         var logger = app.Logger;
-        logger.LogInformation($"ENV VARIABLE: {defaultEnvVariable}");
+        logger.LogInformation($"ENV VARIABLE: {defaultConfigVariable}");
     }
 }
