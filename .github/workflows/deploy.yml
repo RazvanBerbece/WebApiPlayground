@@ -77,8 +77,8 @@ jobs:
         uses: azure/container-apps-deploy-action@v1
         with:
           imageToDeploy: ${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:${{ steps.tag_version.outputs.new_tag }}
-          acrUsername: ${{ secrets.AZURE_CLIENT_ID }}
-          acrPassword: ${{ secrets.AZURE_CLIENT_SECRET }}
+          registryUsername: ${{ secrets.AZURE_CLIENT_ID }}
+          registryPassword: ${{ secrets.AZURE_CLIENT_SECRET }}
           containerAppEnvironment: cae-api
           containerAppName: capp-webapi-playground
           resourceGroup: rg-webApiPlayground
