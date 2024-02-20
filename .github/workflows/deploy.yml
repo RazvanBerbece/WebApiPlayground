@@ -83,11 +83,11 @@ jobs:
             az containerapp registry set -n capp-webapi-playground -g rg-webApiPlayground --server ${{ env.DOCKER_ARTIFACT_REPOSITORY }} --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
             
             : # Update the image on the container app
-            az containerapp update -n capp-webapi-playground -g rg-webApiPlayground --image ${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:latest --min-replicas 1 --max-replicas 2
+            az containerapp update -n capp-webapi-playground -g rg-webApiPlayground --image ${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:latest --min-replicas 1 --max-replicas 2 --set-env-vars "ASPNETCORE_ENVIRONMENT=Staging"
 
             : # Update ingress and allow external traffic on container app
             : # TODO This could maybe implement revisions and blue-green deployment ?
-            az containerapp ingress enable -n capp-webapi-playground -g rg-webApiPlayground --type external --allow-insecure --target-port 8080 --transport auto
+            az containerapp ingress enable -n capp-webapi-playground -g rg-webApiPlayground --type external --allow-insecure --target-port 8080 --transport auto 
 
       - name: Create a new GitHub release
         uses: ncipollo/release-action@v1
