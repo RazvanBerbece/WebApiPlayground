@@ -66,12 +66,21 @@ jobs:
           docker push "${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:latest"
           docker push "${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:${{ steps.tag_version.outputs.new_tag }}"
           
-      - name: Deploy new image to Container App
-        uses: Azure/cli@v1.0.9
+      # - name: Deploy new image to Container App
+      #   uses: Azure/cli@v1.0.9
+      #   with:
+      #     inlineScript: |
+      #       az containerapp registry set -n capp-webapi-playground -g rg-webApiPlayground --identity system --server ${{ env.DOCKER_ARTIFACT_REPOSITORY }} 
+      #       az containerapp update -n capp-webapi-playground -g rg-webApiPlayground --image acrwebapiplayground.azurecr.io/webapi:latest --min-replicas 1 --max-replicas 2
+
+      - name: Build and Deploy Container App to Azure
+        uses: azure/container-apps-deploy-action@v1
         with:
-          inlineScript: |
-            az containerapp registry set -n capp-webapi-playground -g rg-webApiPlayground --identity system --server ${{ env.DOCKER_ARTIFACT_REPOSITORY }} 
-            az containerapp update -n capp-webapi-playground -g rg-webApiPlayground --image acrwebapiplayground.azurecr.io/webapi:latest --min-replicas 1 --max-replicas 1
+          imageToDeploy: ${{ env.DOCKER_ARTIFACT_REPOSITORY }}/webapi:${{ steps.tag_version.outputs.new_tag }}
+          containerAppEnvironment: cae-api
+          containerAppName: capp-webapi-playground
+          resourceGroup: rg-webApiPlayground
+          ingress: external
 
       - name: Create a new GitHub release
         uses: ncipollo/release-action@v1
