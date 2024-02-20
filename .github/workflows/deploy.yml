@@ -55,6 +55,10 @@ jobs:
           registry: ${{ env.DOCKER_ARTIFACT_REPOSITORY }}
           username: ${{ secrets.AZURE_CLIENT_ID }}
           password: ${{ secrets.AZURE_CLIENT_SECRET }}
+
+      - name: Extract appsettings.json
+        run: |
+          echo ${{ secrets.APPSETTINGS_JSON }} > src/WebApiPlayground/appsettings.json
           
       - name: Build new Docker image
         run: |

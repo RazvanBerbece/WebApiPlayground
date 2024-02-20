@@ -1,14 +1,17 @@
 namespace WebApiPlayground.Infrastructure.Swagger;
 
-public static class SwaggerBuilderExtensions
+public static class ServiceExtensions
 {
-    public static IServiceCollection AddSwagger(this IServiceCollection services)
+    public static void AddSwagger(this IServiceCollection services)
     {
-        return services.SwaggerDocument();
+        services.SwaggerDocument();
     }
     
-    public static IApplicationBuilder UseSwagger(this IApplicationBuilder app)
+    public static void UseSwagger(this WebApplication app)
     {
-        return app.UseSwaggerGen();
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwaggerGen();
+        }
     }
 }
