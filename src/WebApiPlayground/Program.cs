@@ -5,12 +5,12 @@ using WebApiPlayground.Startup;
 
 var bld = WebApplication.CreateBuilder();
 bld.Services.AddApiEndpoints();
-bld.Services.AddSwagger();
+bld.Services.AddSwaggerDocument();
 bld.Services.AddSqlServerService();
 
 var app = bld.Build();
 app.UseApiEndpoints();
-app.UseSwagger();
+app.UseSwaggerDocument();
 
 // Debug calls
 app.CheckConfiguration(bld.Configuration);

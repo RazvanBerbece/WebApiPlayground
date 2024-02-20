@@ -12,7 +12,7 @@ public static class ConfigurationManager
         var defaultConfigVariable = configuration.GetValue<string>("DefaultConfigurationVariable");
         var defaultSecretKey = configuration.GetValue<string>("DefaultSecretKey");
         var logger = app.Logger;
-        logger.LogInformation($"ENV VARIABLE: {defaultConfigVariable}");
-        logger.LogInformation($"SECRET KEY: {defaultSecretKey}");
+        /*logger.LogInformation($"ENV VARIABLE: {defaultConfigVariable}");
+        logger.LogInformation($"SECRET KEY: {defaultSecretKey}");*/
     }
 }

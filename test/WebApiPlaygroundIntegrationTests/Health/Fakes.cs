@@ -7,4 +7,7 @@ static class Fakes
 {
     internal static PingRequest FakePingRequest(this Faker f)
         => new(f.Lorem.Paragraphs());
+    
+    internal static PingRequest FakeInvalidPingRequest(this Faker f)
+        => new("");
 }

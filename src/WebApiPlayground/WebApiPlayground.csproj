@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="FastEndpoints" Version="5.22.0.7-beta" />
     <PackageReference Include="FastEndpoints.Swagger" Version="5.22.0.7-beta" />
+    <PackageReference Include="Microsoft.OpenApi" Version="1.6.13" />
   </ItemGroup>
 
   <ItemGroup>
